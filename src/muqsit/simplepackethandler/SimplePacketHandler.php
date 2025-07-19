@@ -12,8 +12,14 @@ use muqsit\simplepackethandler\monitor\PacketMonitor;
 use pocketmine\event\EventPriority;
 use pocketmine\network\mcpe\protocol\PacketPool;
 use pocketmine\plugin\Plugin;
+use pocketmine\plugin\PluginBase;
 
-final class SimplePacketHandler{
+final class SimplePacketHandler extends PluginBase {
+	
+	public function onEnable() : void {
+		self::createInterceptor($this, EventPriority::NORMAL, true);
+		self::createMonitor($this, true);
+	}
 
 	public static function createInterceptor(Plugin $registerer, int $priority = EventPriority::NORMAL, bool $handle_cancelled = false) : IPacketInterceptor{
 		if($priority === EventPriority::MONITOR){
